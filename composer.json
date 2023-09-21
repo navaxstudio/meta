@@ -1,0 +1,13 @@
+{
+    "name": "navax/meta_config",
+    "description": "meta config",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Navax\\MetaConfig\\": "src/"
+        },
+        "files": ["src/index.php"]
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
