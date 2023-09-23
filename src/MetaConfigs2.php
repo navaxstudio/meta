@@ -96,6 +96,8 @@ class MetaConfigs2
             $fields = array_keys($this->types->getSelectBox());
         }elseif ($type == 'text'){
             $fields = array_keys($this->types->getText());
+        }elseif($type == 'file'){
+            $fields = array_keys($this->types->getFile());
         }
         foreach ($fields as $field){
             if(isset($data[$field]) && !empty($data[$field]))
@@ -117,7 +119,10 @@ class MetaConfigs2
             $fields = array_keys($this->types->getSelectBox());
         }elseif ($type == 'text'){
             $fields = array_keys($this->types->getText());
+        }elseif($type == 'file'){
+            $fields = array_keys($this->types->getFile());
         }
+
         foreach ($fields as $field){
             if(isset($data[$field]) && !empty($data[$field]))
                 $params[$field] = $data[$field];
@@ -148,15 +153,17 @@ class MetaConfigs2
                 $string .= '|phone:persian';
             }elseif ($type == 'email'){
                 $string .= '|email';
+            }elseif ($type == 'file'){
+                $string .= '|uploaded_file';
             }
 
             ////////////params///////////////
             $params = json_decode($item->getParams() , true) ?? [];
             foreach ($params as $key => $value){
-                if($key != 'values')
-                    $string .= "|$key:$value";
-                else
-                    $string .= "|in:$value";
+               if($key == 'values')
+                   $string .= "|in:$value";
+               else
+                   $string .= "|$key:$value";
             }
 
             if($form_data)

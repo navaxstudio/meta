@@ -28,6 +28,10 @@ class Types
         'values' => true
     ];
 
+    private array $file = [
+        'uploaded_file' => true
+    ];
+
     private array $sharedFields = [
         'required' => true
     ];
@@ -55,5 +59,10 @@ class Types
     public function getSelectBox(): array
     {
         return $this->selectBox;
+    }
+
+    public function getFile(): array
+    {
+        return $this->file;
     }
 }
