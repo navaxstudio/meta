@@ -17,23 +17,23 @@ class Types
     ];
 
     private array $email = [
-        'email' => true
+
     ];
 
     private array $phone = [
-        'phone' => true
+
     ];
 
     private array $selectBox = [
         'values' => true
     ];
 
-    private array $file = [
-        'uploaded_file' => true
-    ];
-
     private array $sharedFields = [
         'required' => true
+    ];
+
+    private array $file = [
+
     ];
 
     public function getNumber(): array

@@ -154,16 +154,16 @@ class MetaConfigs2
             }elseif ($type == 'email'){
                 $string .= '|email';
             }elseif ($type == 'file'){
-                $string .= '|uploaded_file';
+                $string .= '|numeric|meta_file';
             }
 
             ////////////params///////////////
             $params = json_decode($item->getParams() , true) ?? [];
             foreach ($params as $key => $value){
-               if($key == 'values')
-                   $string .= "|in:$value";
-               else
-                   $string .= "|$key:$value";
+                if($key == 'values')
+                    $string .= "|in:$value";
+                else
+                    $string .= "|$key:$value";
             }
 
             if($form_data)
