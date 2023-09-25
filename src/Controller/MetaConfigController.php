@@ -11,13 +11,14 @@ use Navax\MetaConfig\MetaConfigs2;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class MetaConfigController extends AbstractController
 {
 
     private MetaConfigs2 $metaConfig;
-    public function __construct(private readonly CustomResponse $customResponse , private readonly MetaConfigsRepository $metaConfigsRepository , private readonly EntityManagerInterface $entityManager , private readonly Types $types){
-        $this->metaConfig = new MetaConfigs2($this->entityManager , $this->customResponse , $this->metaConfigsRepository , $this->types);
+    public function __construct(private readonly CustomResponse $customResponse , private readonly MetaConfigsRepository $metaConfigsRepository , private readonly EntityManagerInterface $entityManager , private readonly Types $types, RequestStack $requestStack){
+        $this->metaConfig = new MetaConfigs2($this->entityManager , $this->customResponse , $this->metaConfigsRepository , $this->types , $requestStack);
     }
 
     /**

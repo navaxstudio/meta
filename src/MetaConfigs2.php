@@ -9,10 +9,20 @@ use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\Share\CustomResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class MetaConfigs2
 {
-    public function  __construct(private readonly EntityManagerInterface $entityManager , private readonly CustomResponse $customResponse , private readonly MetaConfigsRepository $metaConfigsRepository , private readonly Types $types){}
+    private $request;
+    private $data;
+    public function  __construct(private readonly EntityManagerInterface $entityManager , private readonly CustomResponse $customResponse , private readonly MetaConfigsRepository $metaConfigsRepository , private readonly Types $types , RequestStack $requestStack){
+        $this->request = $requestStack->getCurrentRequest();
+        if(str_contains($this->request->headers->get('content-type') , 'multipart/form-data')) {
+            $this->data = $_POST;
+        }else {
+            $this->data = $this->request->request->all();
+        }
+    }
 
     /**
      * @throws Exception
@@ -160,10 +170,13 @@ class MetaConfigs2
             ////////////params///////////////
             $params = json_decode($item->getParams() , true) ?? [];
             foreach ($params as $key => $value){
-                if($key == 'values')
+                if($key == 'values') {
                     $string .= "|in:$value";
-                else
+                }elseif ($key == 'default') {
+                    $this->setDefault($item , $value , $form_data);
+                }else {
                     $string .= "|$key:$value";
+                }
             }
 
             if($form_data)
@@ -173,5 +186,21 @@ class MetaConfigs2
         }
 
         return $meta_validation;
+    }
+
+    private function setDefault($item , $value , $form_data): void
+    {
+        if($form_data){
+            if (!in_array('meta_' . $item->getName(), array_keys($this->data))) {
+                $this->data = array_merge($this->data, ['meta_' . $item->getName() => $value]);
+                $_POST = $this->data;
+            }
+        }else {
+            if (!in_array($item->getName(), array_keys($this->data['meta'] ?? []))) {
+                $meta_data = array_merge($this->data['meta'] ?? [], [$item->getName() => $value]);
+                $this->data['meta'] = $meta_data;
+                $this->request->request->replace($this->data);
+            }
+        }
     }
 }
