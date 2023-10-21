@@ -37,7 +37,7 @@ class MetaConfigs2
     {
         $MetaConfig = $this->metaConfigsRepository->findByNameAndReference($data['name'] , $data['reference']);
         if(!empty($MetaConfig))
-            return $this->customResponse->fail(message: "با این نام و reference قبلا ثبت شده است" , data: ['metaConfig_id' => $MetaConfig->getId()]);
+            return $this->customResponse->fail(message: "با این نام و مرجع قبلا ثبت شده است" , data: ['metaConfig_id' => $MetaConfig->getId()]);
 
         $metaConfig = new MetaConfigs();
         $metaConfig->setName($data['name']);
@@ -59,7 +59,7 @@ class MetaConfigs2
     public function edit(MetaConfigs $metaConfig , $data): JsonResponse
     {
         if(!$this->validateEdit($metaConfig , $data))
-            return $this->customResponse->fail("این نام با این reference قابلیت ویرایش ندارد");
+            return $this->customResponse->fail("این نام با این مرجع قابلیت ویرایش ندارد");
 
         $metaConfig->setName($data['name'] ?? $metaConfig->getName());
         $metaConfig->setReference($data['reference'] ?? $metaConfig->getReference());
