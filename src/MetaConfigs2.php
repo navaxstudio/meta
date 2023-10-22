@@ -52,7 +52,7 @@ class MetaConfigs2
         $this->entityManager->persist($metaConfig);
         $this->entityManager->flush();
 
-        return $this->customResponse->success(message: "metaConfig با موفقیت ثیت شد" , data: ['metaConfig_id' => $metaConfig->getId()]);
+        return $this->customResponse->success(message: "متا با موفقیت ثیت شد" , data: ['metaConfig_id' => $metaConfig->getId()]);
     }
 
 
@@ -72,7 +72,7 @@ class MetaConfigs2
 
         $this->entityManager->persist($metaConfig);
         $this->entityManager->flush();
-        return $this->customResponse->success(message: "metaConfig با موفقیت ویرایش شد" , data: ['metaConfig_id' => $metaConfig->getId()]);
+        return $this->customResponse->success(message: "متا با موفقیت ویرایش شد" , data: ['metaConfig_id' => $metaConfig->getId()]);
     }
 
     public function validateEdit(MetaConfigs $metaConfig , $data): bool

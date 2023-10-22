@@ -27,7 +27,7 @@ class MetaConfigController extends AbstractController
     public function index(): JsonResponse
     {
         $result = $this->metaConfig->getMetaConfigs();
-        return $this->customResponse->success(message: "اطلاعات meta_config دریافت شد" , data: $result);
+        return $this->customResponse->success(message: "اطلاعات متا دریافت شد" , data: $result);
     }
 
 
@@ -43,7 +43,7 @@ class MetaConfigController extends AbstractController
         $request = $request->request->all();
         $metaConfig = $this->metaConfigsRepository->findById($metaConfig_id);
         if(empty($metaConfig))
-            return $this->customResponse->fail(message: "metaConfig وجود ندارد");
+            return $this->customResponse->fail(message: "متا وجود ندارد");
 
         return $this->metaConfig->edit($metaConfig , $request);
     }
@@ -52,10 +52,10 @@ class MetaConfigController extends AbstractController
     {
         $metaConfig = $this->metaConfigsRepository->findById($metaConfig_id);
         if(empty($metaConfig))
-            return $this->customResponse->fail(message: "metaConfig وجود ندارد");
+            return $this->customResponse->fail(message: "متا وجود ندارد");
 
         $metaConfig->setDeletedAt();
         $this->entityManager->flush();
-        return $this->customResponse->success(message: "metaConfig با موفقیت حذف شد");
+        return $this->customResponse->success(message: "متا با موفقیت حذف شد");
     }
 }
